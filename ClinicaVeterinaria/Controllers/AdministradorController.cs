@@ -1,6 +1,9 @@
-﻿using ClinicaVeterinaria.Domain.Models.FuncionarioAggregate;
+﻿using ClinicaVeterinaria.Application.ViewModel;
+using ClinicaVeterinaria.Domain.Models.ClienteAggregate;
+using ClinicaVeterinaria.Domain.Models.FuncionarioAggregate;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using static ClinicaVeterinaria.Domain.Models.FuncionarioAggregate.Funcionario;
 
@@ -27,10 +30,30 @@ public class AdministradorController : Controller {
 
     [Authorize(Policy = "RequireAdmin")]
     [HttpDelete]
-    public IActionResult CadastrarFuncionario(int nif)
+    public IActionResult DemitirFuncionario(int nif)
     {
         _funcionarioRepository.DemitirFuncionario(nif);
         return Ok();
+    }
+
+    [Authorize(Policy = "RequireAdmin")]
+    [HttpPut]
+    [Route("editarSenha")]
+    public IActionResult EditarSenha(int nif, string novaSenha)
+    {
+        _funcionarioRepository.EditarSenha(nif, novaSenha);
+
+        return Ok();
+    }
+
+    [Authorize(Policy = "RequireAdmin")]
+    [HttpGet]
+    [Route("pesquisarFuncionario")]
+    public IActionResult PesquisarFuncionario(int nif)
+    {
+        var funcionario = _funcionarioRepository.PesquisarFuncionario(nif);
+
+        return Ok(funcionario);
     }
 }
 

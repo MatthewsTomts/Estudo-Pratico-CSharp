@@ -13,7 +13,8 @@ public class Cliente
     public string senha { get; set; }
 
     // Used to create the Cliente
-    public Cliente (string nome, string email, string senha)
+    // Used to alter the Cliente
+    public Cliente (string? nome, string? email, string? senha)
     {
         this.nome = nome;
         this.email = email;
@@ -21,15 +22,10 @@ public class Cliente
     }
 
     // Used to Login
+    // Used to Recover Password
     public Cliente(string email, string senha)
     {
         this.email = email;
         this.senha = senha;
-    }
-
-    // Used to generate tokens
-    public Cliente (int idCliente)
-    {
-        this.idCliente = idCliente;
     }
 }

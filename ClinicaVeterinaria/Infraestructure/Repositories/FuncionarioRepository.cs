@@ -1,4 +1,5 @@
 ﻿using ClinicaVeterinaria.Domain.Models.FuncionarioAggregate;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClinicaVeterinaria.Infraestructure.Repositories;
 
@@ -19,6 +20,19 @@ public class FuncionarioRepository : IFuncionarioRepository {
         }
     }
 
+    public void EditarSenha(int nif, string novaSenha)
+    {
+        var funcionario = _connection.Funcionario.Find(nif);
+
+        if (funcionario != null ) { 
+            funcionario.senha = novaSenha;
+
+            _connection.Entry(funcionario).State = EntityState.Modified;
+
+            _connection.SaveChanges();
+        }
+    }
+
     public Funcionario Logar(Funcionario funcionario) {
         var result = _connection.Funcionario.Where(c =>
             c.nif == funcionario.nif && c.senha == funcionario.senha)
@@ -28,8 +42,17 @@ public class FuncionarioRepository : IFuncionarioRepository {
             })
             .FirstOrDefault();
 
-        Funcionario funcionarioDB = new(result.Nif, result.Cargo);
+        if (result == null)
+        {
+            return null;
+        } else
+        {
+            return new Funcionario(result.Nif, result.Cargo);
+        }
+    }
 
-        return funcionarioDB;
+    public Funcionario PesquisarFuncionario(int nif)
+    {
+        return _connection.Funcionario.Find(nif);
     }
 }

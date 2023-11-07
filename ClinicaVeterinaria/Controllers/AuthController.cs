@@ -29,9 +29,9 @@ public class AuthController : Controller
         int? idCliente = _clienteRepository.Logar(cliente); // 'int?' accepts null values
 
         // Verifies if the Repository returned a valid id
-        if (idCliente != null) {
+        if (idCliente != 0) {
             // '(int)' changes the 'int?' to 'int'
-            var token = TokenService.GenerateToken((int)idCliente, "cliente"); 
+            var token = TokenService.GenerateToken((int)idCliente, "Cliente"); 
             return Ok(token);
         }
 
@@ -49,8 +49,7 @@ public class AuthController : Controller
         Funcionario funcionarioDB = _funcionarioRepository.Logar(funcionario); // 'int?' accepts null values
 
         // Verifies if the Repository returned a valid id
-        if (funcionarioDB != null)
-        {
+        if (funcionarioDB != null) {
             // '(int)' changes the 'int?' to 'int'
             var token = TokenService.GenerateToken((int)funcionarioDB.nif, funcionarioDB.cargo.ToString());
             return Ok(token);

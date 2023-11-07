@@ -12,6 +12,29 @@ public class ClienteRepository : IClienteRepository {
         _connection.SaveChanges();
     }
 
+    public void EditarPerfil(Cliente cliente, int idCliente)
+    {
+        var clienteDB = _connection.Cliente.Find(idCliente);
+
+        if (cliente.nome != null) {
+            clienteDB.nome = cliente.nome;
+        }
+
+        if (cliente.email != null)
+        {
+            clienteDB.email = cliente.email;
+        }
+
+        if (cliente.senha != null)
+        {
+            clienteDB.senha = cliente.senha;
+        }
+
+        _connection.Entry(clienteDB).State = EntityState.Modified;
+
+        _connection.SaveChanges();
+    }
+
     public int Logar(Cliente cliente)
     {
         // Search for the username on the DB if found it returns its id, if not returns null

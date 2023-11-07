@@ -2,6 +2,9 @@
 using ClinicaVeterinaria.Application.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace ClinicaVeterinaria.Controllers;
 
@@ -55,5 +58,34 @@ public class ClienteController : Controller
         }
 
         return BadRequest("Email não encontrado ou código inválido!");
+    }
+
+    [Authorize(Policy = "RequireCliente")]
+    [HttpPut]
+    [Route("editarPerfil")]
+    public IActionResult EditarPerfil([FromForm] ClienteViewModel clienteView) {
+
+        Cliente cliente = new(clienteView.Nome, clienteView.Email, clienteView.Senha);
+
+        string jwt = HttpContext.Request.Headers["Authorization"];
+        int idCliente = 0;
+
+        if (!string.IsNullOrEmpty(jwt)) {
+            // Remove "Bearer " prefix if it's included in the header
+            jwt = jwt.Replace("Bearer ", "");
+
+            // Decode the JWT
+            var handler = new JwtSecurityTokenHandler();
+            var token = handler.ReadJwtToken(jwt);
+
+            // Extract the subject claim (for example, the user's ID)
+            if (token.Claims.FirstOrDefault(claim => claim.Type == "userId") is Claim subjectClaim) {
+                idCliente = int.Parse(subjectClaim.Value);
+            }
+        }
+
+        _clienteRepository.EditarPerfil(cliente, idCliente);
+
+        return Ok();
     }
 }
