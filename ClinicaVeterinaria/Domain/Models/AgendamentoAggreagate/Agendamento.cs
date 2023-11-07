@@ -9,12 +9,12 @@ namespace ClinicaVeterinaria.Domain.Models.AgendamentoAggreagate;
 public class Agendamento {
     [Key]
     public int idAgendamento { get; set; }
-    public string nomeAnimal { get; set; }
-    public Especie especie { get; set; }
+    public string? nomeAnimal { get; set; }
+    public Especie? especie { get; set; }
     public TimeOnly horario { get; set; }
     public DateOnly data {  get; set; }
     public Status status { get; set; }
-    public int idCliente { get; set; }
+    public int? idCliente { get; set; }
     public int nif {  get; set; }
 
     [ForeignKey(nameof(idCliente))]
@@ -23,6 +23,15 @@ public class Agendamento {
     public Funcionario funcionario { get; set; }
 
     public Agendamento() { }
+
+    public Agendamento(DateOnly data, TimeOnly horario, Status status, int? idCliente, int nif)
+    {
+        this.data = data;
+        this.horario = horario;
+        this.status = status;
+        this.idCliente = idCliente;
+        this.nif = nif;
+    }
 
     public enum Especie {
         Gato,
