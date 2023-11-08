@@ -1,8 +1,9 @@
-﻿using ClinicaVeterinaria.Domain.Models.ClienteAggregate;
+﻿using ClinicaVeterinaria.Domain.Models.FuncionarioAggregate;
+using ClinicaVeterinaria.Domain.Models.ClienteAggregate;
 using ClinicaVeterinaria.Application.Services;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using ClinicaVeterinaria.Domain.Models.FuncionarioAggregate;
 
 namespace ClinicaVeterinaria.Controllers;
 
@@ -40,7 +41,7 @@ public class AuthController : Controller
 
     [HttpPost]
     [Route("login/funcionario")]
-    public IActionResult LoginFuncionario(int nif, string senha)
+    public IActionResult LoginFuncionario([Required] int nif, string senha)
     {
         // Encapsulates the email and senha to send it to the Repository
         Funcionario funcionario = new(nif, senha);

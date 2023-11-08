@@ -1,11 +1,8 @@
-﻿using ClinicaVeterinaria.Application.ViewModel;
-using ClinicaVeterinaria.Domain.Models.ClienteAggregate;
+﻿using static ClinicaVeterinaria.Domain.Models.FuncionarioAggregate.Funcionario;
 using ClinicaVeterinaria.Domain.Models.FuncionarioAggregate;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using static ClinicaVeterinaria.Domain.Models.FuncionarioAggregate.Funcionario;
 
 namespace ClinicaVeterinaria.Controllers;
 
@@ -20,7 +17,8 @@ public class AdministradorController : Controller {
 
     [Authorize(Policy = "RequireAdmin")]
     [HttpPost]
-    public IActionResult CadastrarFuncionario(int nif, string nome, Cargo Cargo, string senha) {
+    public IActionResult CadastrarFuncionario([FromForm][Required] int nif, [Required] string nome,
+        [Required] Cargo Cargo, [Required] string senha) {
         Funcionario funcionario = new(nif, nome, senha, Cargo);
 
         _funcionarioRepository.CadastrarFuncionario(funcionario);
@@ -30,7 +28,7 @@ public class AdministradorController : Controller {
 
     [Authorize(Policy = "RequireAdmin")]
     [HttpDelete]
-    public IActionResult DemitirFuncionario(int nif)
+    public IActionResult DemitirFuncionario([Required] int nif)
     {
         _funcionarioRepository.DemitirFuncionario(nif);
         return Ok();
@@ -39,7 +37,7 @@ public class AdministradorController : Controller {
     [Authorize(Policy = "RequireAdmin")]
     [HttpPut]
     [Route("editarSenha")]
-    public IActionResult EditarSenha(int nif, string novaSenha)
+    public IActionResult EditarSenha([Required] int nif, [Required] string novaSenha)
     {
         _funcionarioRepository.EditarSenha(nif, novaSenha);
 
@@ -49,7 +47,7 @@ public class AdministradorController : Controller {
     [Authorize(Policy = "RequireAdmin")]
     [HttpGet]
     [Route("pesquisarFuncionario")]
-    public IActionResult PesquisarFuncionario(int nif)
+    public IActionResult PesquisarFuncionario([Required] int nif)
     {
         var funcionario = _funcionarioRepository.PesquisarFuncionario(nif);
 

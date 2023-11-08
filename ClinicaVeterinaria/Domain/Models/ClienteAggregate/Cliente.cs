@@ -11,6 +11,7 @@ public class Cliente
     public string nome { get; set; }
     public string email { get; set; }
     public string senha { get; set; }
+    public Status status { get; set; }
 
     // Used to create the Cliente
     // Used to alter the Cliente
@@ -27,5 +28,18 @@ public class Cliente
     {
         this.email = email;
         this.senha = senha;
+    }
+
+    public Cliente(int idCliente, string senha)
+    {
+        this.idCliente = idCliente;
+        this.senha = senha;
+    }
+
+    public Cliente() { }
+
+    public enum Status {
+        Ativo,
+        Inativo
     }
 }

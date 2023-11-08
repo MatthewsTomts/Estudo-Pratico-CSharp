@@ -1,7 +1,7 @@
-﻿using ClinicaVeterinaria.Domain.Models.ClienteAggregate;
-using ClinicaVeterinaria.Domain.Models.FuncionarioAggregate;
-using System.ComponentModel.DataAnnotations;
+﻿using ClinicaVeterinaria.Domain.Models.FuncionarioAggregate;
+using ClinicaVeterinaria.Domain.Models.ClienteAggregate;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace ClinicaVeterinaria.Domain.Models.AgendamentoAggreagate;
 

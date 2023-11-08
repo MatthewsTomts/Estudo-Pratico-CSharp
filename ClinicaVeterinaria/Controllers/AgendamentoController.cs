@@ -1,5 +1,6 @@
 ﻿using static ClinicaVeterinaria.Domain.Models.AgendamentoAggreagate.Agendamento;
 using ClinicaVeterinaria.Domain.Models.AgendamentoAggreagate;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Mvc;
@@ -41,7 +42,7 @@ public class AgendamentoController : Controller {
 
     [Authorize(Policy = "RequireVeterinario")]
     [HttpPost]
-    public IActionResult CadastrarHorario(DateOnly data, TimeOnly horario)
+    public IActionResult CadastrarHorario([FromForm][Required] DateOnly data, [Required] TimeOnly horario)
     {
         string jwt = HttpContext.Request.Headers["Authorization"];
         int nif = 0;
@@ -94,7 +95,8 @@ public class AgendamentoController : Controller {
 
     [Authorize(Policy = "RequireCliente")]
     [HttpPatch]
-    public IActionResult AgendarConsulta(int idAgendamento, Especie especie, string nomeAnimal)
+    public IActionResult AgendarConsulta([FromForm][Required] int idAgendamento, [Required] Especie especie, 
+        [Required] string nomeAnimal)
     {
         string jwt = HttpContext.Request.Headers["Authorization"];
         int idCliente = 0;
@@ -120,7 +122,7 @@ public class AgendamentoController : Controller {
     // Endpoints of the Both
     [HttpGet]
     [Route("pesquisarAgendamentos")]
-    public IActionResult PesquisarAgendamentos(DateOnly data)
+    public IActionResult PesquisarAgendamentos([Required] DateOnly data)
     {
         var agendamentos = _agendamentoRepository.PesquisarAgendamentos(data);
 
@@ -128,7 +130,7 @@ public class AgendamentoController : Controller {
     }
 
     [HttpDelete]
-    public IActionResult CancelarConsulta(int idAgendamento)
+    public IActionResult CancelarConsulta([Required] int idAgendamento)
     {
         _agendamentoRepository.CancelarConsulta(idAgendamento);
 
@@ -137,7 +139,7 @@ public class AgendamentoController : Controller {
 
     [HttpPatch]
     [Route("finalizarConsulta")]
-    public IActionResult FinalizarConsulta(int idAgendamento)
+    public IActionResult FinalizarConsulta([Required] int idAgendamento)
     {
         _agendamentoRepository.FinalizarConsulta(idAgendamento);
 

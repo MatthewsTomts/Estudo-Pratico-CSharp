@@ -1,3 +1,5 @@
+using ClinicaVeterinaria.Domain.Models.AgendamentoAggreagate;
+using ClinicaVeterinaria.Domain.Models.FuncionarioAggregate;
 using ClinicaVeterinaria.Domain.Models.ClienteAggregate;
 using ClinicaVeterinaria.Infraestructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -5,8 +7,6 @@ using ClinicaVeterinaria.Application.Swagger;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-using ClinicaVeterinaria.Domain.Models.FuncionarioAggregate;
-using ClinicaVeterinaria.Domain.Models.AgendamentoAggreagate;
 
 var builder = WebApplication.CreateBuilder(args);
 

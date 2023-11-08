@@ -1,7 +1,6 @@
-﻿using ClinicaVeterinaria.Domain.Models.AgendamentoAggreagate;
-using ClinicaVeterinaria.Domain.Models.ClienteAggregate;
+﻿using static ClinicaVeterinaria.Domain.Models.AgendamentoAggreagate.Agendamento;
+using ClinicaVeterinaria.Domain.Models.AgendamentoAggreagate;
 using Microsoft.EntityFrameworkCore;
-using static ClinicaVeterinaria.Domain.Models.AgendamentoAggreagate.Agendamento;
 
 namespace ClinicaVeterinaria.Infraestructure.Repositories;
 
@@ -13,8 +12,7 @@ public class AgendamentoRepository : IAgendamentoRepository
     public List<Agendamento> ListarAgendamentos(int nif) => _connection.Agendamento
         .Where(agendamento => agendamento.nif == nif).ToList();
 
-    public void CadastrarHorario(DateOnly data, TimeOnly horario, int nif)
-    {
+    public void CadastrarHorario(DateOnly data, TimeOnly horario, int nif) {
         Agendamento agendamento = new(data, horario, 0, null, nif);
 
         _connection.Agendamento.Add(agendamento);
@@ -25,9 +23,9 @@ public class AgendamentoRepository : IAgendamentoRepository
     public List<Agendamento> ListarConsultas(int idCliente) => _connection.Agendamento
         .Where(agendamento => agendamento.idCliente == idCliente).ToList();
 
-    public void AgendarConsulta(int idAgendamento, Especie especie, string nomeAnimal, int idCliente)
-    {
-        Agendamento agendamento = _connection.Agendamento.Where(agendamento => agendamento.idAgendamento == idAgendamento)
+    public void AgendarConsulta(int idAgendamento, Especie especie, string nomeAnimal, int idCliente) {
+        Agendamento agendamento = _connection.Agendamento.Where(agendamento =>
+            agendamento.idAgendamento == idAgendamento)
             .FirstOrDefault();
 
         agendamento.status = (Status)1;
@@ -41,11 +39,11 @@ public class AgendamentoRepository : IAgendamentoRepository
 
     // Ambos
     public List<Agendamento> PesquisarAgendamentos(DateOnly data) => _connection.Agendamento
-        .Where(agendamento => agendamento.data == data).ToList();
+        .Where(agendamento => agendamento.data == data && agendamento.status == 0).ToList();
 
-    public void CancelarConsulta(int idAgendamento)
-    {
-        Agendamento agendamento = _connection.Agendamento.Where(a => a.idAgendamento == idAgendamento).FirstOrDefault();
+    public void CancelarConsulta(int idAgendamento) {
+        Agendamento agendamento = _connection.Agendamento.Where(a => a.idAgendamento == idAgendamento 
+        && (a.status == (Status)0 || a.status == (Status)1)).FirstOrDefault();
 
         agendamento.status = (Status)4;
 
@@ -53,9 +51,9 @@ public class AgendamentoRepository : IAgendamentoRepository
         _connection.SaveChanges();
     }
 
-    public void FinalizarConsulta(int idAgendamento)
-    {
-        Agendamento agendamento = _connection.Agendamento.Where(a => a.idAgendamento == idAgendamento).FirstOrDefault();
+    public void FinalizarConsulta(int idAgendamento) {
+        Agendamento agendamento = _connection.Agendamento.Where(a => a.idAgendamento == idAgendamento
+            && a.status == (Status)1).FirstOrDefault();
 
         agendamento.status = (Status)3;
 

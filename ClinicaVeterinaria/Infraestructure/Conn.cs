@@ -1,8 +1,7 @@
 ﻿using ClinicaVeterinaria.Domain.Models.AgendamentoAggreagate;
-using ClinicaVeterinaria.Domain.Models.ClienteAggregate;
 using ClinicaVeterinaria.Domain.Models.FuncionarioAggregate;
+using ClinicaVeterinaria.Domain.Models.ClienteAggregate;
 using Microsoft.EntityFrameworkCore;
-using static ClinicaVeterinaria.Domain.Models.FuncionarioAggregate.Funcionario;
 
 namespace ClinicaVeterinaria.Infraestructure;
 

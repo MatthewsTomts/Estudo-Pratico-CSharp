@@ -1,9 +1,9 @@
 ﻿using ClinicaVeterinaria.Domain.Models.ClienteAggregate;
 using ClinicaVeterinaria.Application.ViewModel;
-using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace ClinicaVeterinaria.Controllers;
@@ -21,10 +21,10 @@ public class ClienteController : Controller
     }
 
     [HttpPost]
-    public IActionResult Cadastro([FromForm] ClienteViewModel clienteView)
-    {
+    public IActionResult Cadastro([FromForm][Required] string nome, [Required] string email, 
+        [Required] string senha) {
         // Encapsulates the nome, email and senha to send it to the Repository
-        var cliente = new Cliente(clienteView.Nome, clienteView.Email, clienteView.Senha);
+        var cliente = new Cliente(nome, email, senha);
 
         // Call the Repository to create the Cliente
         _clienteRepository.Cadastro(cliente);
@@ -34,7 +34,7 @@ public class ClienteController : Controller
 
     [HttpPatch]
     [Route("pedidoRecuperar")]
-    public IActionResult PedidoRecuperarSenha([FromForm] string email)
+    public IActionResult PedidoRecuperarSenha([FromForm][Required] string email)
     {
         string codigo = _clienteRepository.PedidoRecuperarSenha(email);
 
@@ -47,7 +47,8 @@ public class ClienteController : Controller
 
     [HttpPatch]
     [Route("recuperar")]
-    public IActionResult RecuperarSenha([FromForm] string email, string novaSenha, string codigoValidacao)
+    public IActionResult RecuperarSenha([FromForm][Required] string email, [Required] string novaSenha,
+        [Required] string codigoValidacao)
     {
         Cliente cliente = new(email, novaSenha);
 
