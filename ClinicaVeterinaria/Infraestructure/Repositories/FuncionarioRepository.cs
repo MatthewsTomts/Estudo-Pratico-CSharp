@@ -30,7 +30,9 @@ public class FuncionarioRepository : IFuncionarioRepository {
     public void DemitirFuncionario(int nif) {
         var funcionarioDB = _connection.Funcionario.Find(nif);
         if (funcionarioDB != null) {
-            _connection.Funcionario.Remove(funcionarioDB);
+            funcionarioDB.status = (Status)1;
+
+            _connection.Entry(funcionarioDB).State = EntityState.Modified;
             _connection.SaveChanges();
         }
     }

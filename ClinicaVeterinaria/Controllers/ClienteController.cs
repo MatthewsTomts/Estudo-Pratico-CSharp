@@ -15,8 +15,7 @@ public class ClienteController : Controller
     private readonly IClienteRepository _clienteRepository;
 
     // Setup the Interfaces to be used on this class
-    public ClienteController(IClienteRepository clienteRepository)
-    {
+    public ClienteController(IClienteRepository clienteRepository) {
         _clienteRepository = clienteRepository ?? throw new ArgumentNullException(nameof(clienteRepository));
     }
 
@@ -34,8 +33,7 @@ public class ClienteController : Controller
 
     [HttpPatch]
     [Route("pedidoRecuperar")]
-    public IActionResult PedidoRecuperarSenha([FromForm][Required] string email)
-    {
+    public IActionResult PedidoRecuperarSenha([FromForm][Required] string email) {
         string codigo = _clienteRepository.PedidoRecuperarSenha(email);
 
         if (codigo == "-1") {
@@ -48,8 +46,7 @@ public class ClienteController : Controller
     [HttpPatch]
     [Route("recuperar")]
     public IActionResult RecuperarSenha([FromForm][Required] string email, [Required] string novaSenha,
-        [Required] string codigoValidacao)
-    {
+        [Required] string codigoValidacao) {
         Cliente cliente = new(email, novaSenha);
 
         bool certo = _clienteRepository.RecuperarSenha(cliente, codigoValidacao);
@@ -86,6 +83,35 @@ public class ClienteController : Controller
         }
 
         _clienteRepository.EditarPerfil(cliente, idCliente);
+
+        return Ok();
+    }
+
+    [Authorize(Policy = "RequireCliente")]
+    [HttpDelete]
+    [Route("editarPerfil")]
+    public IActionResult ApagarPerfil() {
+
+        string jwt = HttpContext.Request.Headers["Authorization"];
+        int idCliente = 0;
+
+        if (!string.IsNullOrEmpty(jwt))
+        {
+            // Remove "Bearer " prefix if it's included in the header
+            jwt = jwt.Replace("Bearer ", "");
+
+            // Decode the JWT
+            var handler = new JwtSecurityTokenHandler();
+            var token = handler.ReadJwtToken(jwt);
+
+            // Extract the subject claim (for example, the user's ID)
+            if (token.Claims.FirstOrDefault(claim => claim.Type == "userId") is Claim subjectClaim)
+            {
+                idCliente = int.Parse(subjectClaim.Value);
+            }
+        }
+
+        _clienteRepository.ApagarPerfil(idCliente);
 
         return Ok();
     }

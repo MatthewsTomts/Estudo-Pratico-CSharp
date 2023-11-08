@@ -1,6 +1,7 @@
 ﻿using ClinicaVeterinaria.Domain.Models.ClienteAggregate;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
+using static ClinicaVeterinaria.Domain.Models.ClienteAggregate.Cliente;
 
 namespace ClinicaVeterinaria.Infraestructure.Repositories;
 
@@ -86,6 +87,14 @@ public class ClienteRepository : IClienteRepository {
         } else {
             return 0;
         }
+    }
+
+    public void ApagarPerfil(int idCliente) {
+        Cliente cliente =_connection.Cliente.Where(c => c.idCliente == idCliente).FirstOrDefault();
+        cliente.status = (Status)1;
+
+        _connection.Entry(cliente).State = EntityState.Modified;
+        _connection.SaveChanges();
     }
 
     public string PedidoRecuperarSenha(string email) {
