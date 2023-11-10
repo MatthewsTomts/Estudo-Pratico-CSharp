@@ -1,5 +1,7 @@
-﻿using ClinicaVeterinaria.Domain.Models.ClienteAggregate;
+﻿using ClinicaVeterinaria.Domain.Models.FuncionarioAggregate;
+using ClinicaVeterinaria.Domain.Models.ClienteAggregate;
 using ClinicaVeterinaria.Application.Services;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using ClinicaVeterinaria.Domain.Models.FuncionarioAggregate;
@@ -29,9 +31,9 @@ public class AuthController : Controller
         int? idCliente = _clienteRepository.Logar(cliente); // 'int?' accepts null values
 
         // Verifies if the Repository returned a valid id
-        if (idCliente != null) {
+        if (idCliente != 0) {
             // '(int)' changes the 'int?' to 'int'
-            var token = TokenService.GenerateToken((int)idCliente, "cliente"); 
+            var token = TokenService.GenerateToken((int)idCliente, "Cliente"); 
             return Ok(token);
         }
 
@@ -40,7 +42,7 @@ public class AuthController : Controller
 
     [HttpPost]
     [Route("login/funcionario")]
-    public IActionResult LoginFuncionario(int nif, string senha)
+    public IActionResult LoginFuncionario([Required] int nif, string senha)
     {
         // Encapsulates the email and senha to send it to the Repository
         Funcionario funcionario = new(nif, senha);
@@ -49,8 +51,7 @@ public class AuthController : Controller
         Funcionario funcionarioDB = _funcionarioRepository.Logar(funcionario); // 'int?' accepts null values
 
         // Verifies if the Repository returned a valid id
-        if (funcionarioDB != null)
-        {
+        if (funcionarioDB != null) {
             // '(int)' changes the 'int?' to 'int'
             var token = TokenService.GenerateToken((int)funcionarioDB.nif, funcionarioDB.cargo.ToString());
             return Ok(token);

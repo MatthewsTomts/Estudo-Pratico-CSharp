@@ -1,3 +1,5 @@
+using ClinicaVeterinaria.Domain.Models.AgendamentoAggreagate;
+using ClinicaVeterinaria.Domain.Models.FuncionarioAggregate;
 using ClinicaVeterinaria.Domain.Models.ClienteAggregate;
 using ClinicaVeterinaria.Infraestructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -47,8 +49,9 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 // Connect the Interface to the Class
-builder.Services.AddTransient<IClienteRepository, ClienteRepository>();
 builder.Services.AddTransient<IFuncionarioRepository, FuncionarioRepository>();
+builder.Services.AddTransient<IClienteRepository, ClienteRepository>();
+builder.Services.AddTransient<IAgendamentoRepository, AgendamentoRepository>();
 
 // Creates the Cors Policy
 builder.Services.AddCors(options => {
@@ -80,11 +83,20 @@ builder.Services.AddAuthentication(x =>
     };
 });
 
-builder.Services.AddAuthorization(options =>
-{
+builder.Services.AddAuthorization(options => {
     options.AddPolicy("RequireAdmin", policy =>
     {
         policy.RequireClaim("tipo", "Administrador");
+    });
+
+    options.AddPolicy("RequireCliente", policy =>
+    {
+        policy.RequireClaim("tipo", "Cliente");
+    });
+
+    options.AddPolicy("RequireVeterinario", policy =>
+    {
+        policy.RequireClaim("tipo", "Veterinario");
     });
 });
 

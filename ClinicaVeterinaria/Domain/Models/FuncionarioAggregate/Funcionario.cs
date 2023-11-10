@@ -10,6 +10,7 @@ public class Funcionario {
     public string nome { get; set; }
     public string senha { get; set; }
     public Cargo cargo { get; set; }
+    public Status status { get; set; }
 
     public Funcionario(int nif, string nome, string senha, Cargo cargo)
     {
@@ -40,10 +41,14 @@ public class Funcionario {
 
     private Funcionario() { }
 
-    public enum Cargo
-    {
+    public enum Cargo {
         Administrador,
         Veterinario
+    }
+
+    public enum Status {
+        Ativo,
+        Inativo
     }
 }
 

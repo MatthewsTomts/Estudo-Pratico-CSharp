@@ -1,4 +1,6 @@
-﻿using ClinicaVeterinaria.Domain.Models.FuncionarioAggregate;
+﻿using static ClinicaVeterinaria.Domain.Models.FuncionarioAggregate.Funcionario;
+using ClinicaVeterinaria.Domain.Models.FuncionarioAggregate;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -17,7 +19,8 @@ public class AdministradorController : Controller {
 
     [Authorize(Policy = "RequireAdmin")]
     [HttpPost]
-    public IActionResult CadastrarFuncionario(int nif, string nome, Cargo Cargo, string senha) {
+    public IActionResult CadastrarFuncionario([FromForm][Required] int nif, [Required] string nome,
+        [Required] Cargo Cargo, [Required] string senha) {
         Funcionario funcionario = new(nif, nome, senha, Cargo);
 
         _funcionarioRepository.CadastrarFuncionario(funcionario);
@@ -27,10 +30,30 @@ public class AdministradorController : Controller {
 
     [Authorize(Policy = "RequireAdmin")]
     [HttpDelete]
-    public IActionResult CadastrarFuncionario(int nif)
+    public IActionResult DemitirFuncionario([Required] int nif)
     {
         _funcionarioRepository.DemitirFuncionario(nif);
         return Ok();
+    }
+
+    [Authorize(Policy = "RequireAdmin")]
+    [HttpPut]
+    [Route("editarSenha")]
+    public IActionResult EditarSenha([Required] int nif, [Required] string novaSenha)
+    {
+        _funcionarioRepository.EditarSenha(nif, novaSenha);
+
+        return Ok();
+    }
+
+    [Authorize(Policy = "RequireAdmin")]
+    [HttpGet]
+    [Route("pesquisarFuncionario")]
+    public IActionResult PesquisarFuncionario([Required] int nif)
+    {
+        var funcionario = _funcionarioRepository.PesquisarFuncionario(nif);
+
+        return Ok(funcionario);
     }
 }
 
