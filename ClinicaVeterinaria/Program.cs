@@ -82,8 +82,7 @@ builder.Services.AddAuthentication(x =>
     };
 });
 
-builder.Services.AddAuthorization(options =>
-{
+builder.Services.AddAuthorization(options => {
     options.AddPolicy("RequireAdmin", policy =>
     {
         policy.RequireClaim("tipo", "Administrador");

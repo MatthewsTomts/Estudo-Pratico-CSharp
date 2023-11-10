@@ -1,7 +1,7 @@
-﻿using ClinicaVeterinaria.Domain.Models.ClienteAggregate;
+﻿using static ClinicaVeterinaria.Domain.Models.ClienteAggregate.Cliente;
+using ClinicaVeterinaria.Domain.Models.ClienteAggregate;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
-using static ClinicaVeterinaria.Domain.Models.ClienteAggregate.Cliente;
 
 namespace ClinicaVeterinaria.Infraestructure.Repositories;
 

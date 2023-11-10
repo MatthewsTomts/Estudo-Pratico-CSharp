@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClinicaVeterinaria", "ClinicaVeterinaria.csproj", "{A77B7F62-02CA-4EAF-9CB2-61BE9034AE84}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "estudo-final", "..\estudo-final\estudo-final.csproj", "{18C05FE6-FA4C-43B1-ACAE-EDBF0DB9D485}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClinicaVeterinaria", "ClinicaVeterinaria.csproj", "{F52DE258-4E9D-44F1-B376-0DC3D72048AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A77B7F62-02CA-4EAF-9CB2-61BE9034AE84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A77B7F62-02CA-4EAF-9CB2-61BE9034AE84}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A77B7F62-02CA-4EAF-9CB2-61BE9034AE84}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A77B7F62-02CA-4EAF-9CB2-61BE9034AE84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18C05FE6-FA4C-43B1-ACAE-EDBF0DB9D485}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18C05FE6-FA4C-43B1-ACAE-EDBF0DB9D485}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18C05FE6-FA4C-43B1-ACAE-EDBF0DB9D485}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18C05FE6-FA4C-43B1-ACAE-EDBF0DB9D485}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F52DE258-4E9D-44F1-B376-0DC3D72048AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F52DE258-4E9D-44F1-B376-0DC3D72048AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F52DE258-4E9D-44F1-B376-0DC3D72048AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F52DE258-4E9D-44F1-B376-0DC3D72048AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
