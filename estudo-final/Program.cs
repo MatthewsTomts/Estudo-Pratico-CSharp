@@ -8,6 +8,8 @@ using System.Text;
 using Microsoft.OpenApi.Models;
 using estudo_final.Models.FuncionarioAggregate;
 using estudo_final.Models.AgendamentoAggregate;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,9 +50,9 @@ builder.Services.AddTransient<IAgendamentoRepository, AgendamentoRepository>();
 // Adiciona o CORS
 builder.Services.AddCors(options => {
     options.AddPolicy(name: "myPolicy", policy => {
-        policy.WithOrigins("https://localhost:8080", "http://localhost:8080")
+        policy.AllowAnyOrigin() // Permite qualquer Origem
             .AllowAnyHeader()  // Permite qualquer Header
-            .AllowAnyMethod(); // Permite qualquer metodo
+            .AllowAnyMethod(); // Permite qualquer Método
     });
 });
 

@@ -20,7 +20,7 @@ public class FuncionarioController : Controller {
 
     [HttpPost]
     [Authorize(Policy = "RequireAdmin")]
-    public IActionResult CadastrarFuncionario([FromForm] FuncionarioViewModel funcionarioVM) {
+    public IActionResult CadastrarFuncionario( FuncionarioViewModel funcionarioVM) {
         funcionarioVM.senha = EncryptService.Encriptar(funcionarioVM.senha);
 
         Funcionario funcionario = new(funcionarioVM.nif, funcionarioVM.nome,
@@ -28,13 +28,13 @@ public class FuncionarioController : Controller {
 
         try {
             _funcionarioRepository.CadastrarFuncionario(funcionario);
-            return Ok();
+            return Ok(new { message = "Funcionario Cadastrado" });
         } catch (DbUpdateException ex) {
             Console.WriteLine(ex.ToString());
-            return BadRequest("Nif já cadastrado");
+            return BadRequest(new { message = "Nif já cadastrado" });
         } catch (Exception ex) {
             Console.WriteLine(ex.ToString());
-            return BadRequest();
+            return BadRequest(new { message = "Um erro ocorreu" });
         }
     }
 
@@ -42,12 +42,12 @@ public class FuncionarioController : Controller {
     [Authorize(Policy = "RequireAdmin")]
     public IActionResult DemitirFuncionario(int nif) {
         _funcionarioRepository.DemitirFuncionario(nif);
-        return Ok();
+        return Ok(new { message = "Funcionario Demitido" });
     }
 
     [HttpPatch]
     [Authorize(Policy = "RequireAdmin")]
-    public IActionResult EditarPerfil([FromForm] int nif, string? nome, string? senha, CargoFuncionario cargo) {
+    public IActionResult EditarPerfil( int nif, string? nome, string? senha, CargoFuncionario cargo) {
         if (senha != null) {
             senha = EncryptService.Encriptar(senha);
         }
@@ -56,16 +56,16 @@ public class FuncionarioController : Controller {
 
         try {
             _funcionarioRepository.EditarPerfil(funcionario);
-            return Ok();
+            return Ok(new { message = "Perfil Editado" });
         } catch (Exception ex) {
             Console.WriteLine(ex.ToString());
-            return BadRequest();
+            return BadRequest(new { message = "Um erro ocorreu" });
         }
     }
 
     [HttpPost]
     [Route("pesquisarFuncionario")]
-    public IActionResult PesquisarFuncionario([FromForm][Required] int nif) {
+    public IActionResult PesquisarFuncionario([Required] int nif) {
         Funcionario funcionario = _funcionarioRepository.PesquisarFuncionario(nif);
         return Ok(funcionario);
     }

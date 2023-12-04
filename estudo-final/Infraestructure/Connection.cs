@@ -16,7 +16,7 @@ public class Connection : DbContext {
     // Configura a conexão com o banco Postgres
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
         optionsBuilder.UseNpgsql(
-            "Server=localhost;" +
+            "Server=banco-pet-space.postgres.database.azure.com;" +
             "Port=5432;" +
             "User Id=postgres;" +
             "Password=Senai115@;" +

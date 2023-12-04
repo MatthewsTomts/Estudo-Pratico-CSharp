@@ -21,7 +21,8 @@ public class AuthController : Controller {
 
     [HttpPost]
     [Route("cliente")]
-    public IActionResult LoginCliente([FromForm][Required] string email, [Required] string senha) {
+    public IActionResult LoginCliente([Required] string email, [Required] string senha) {
+        Console.WriteLine("tesete");
         Cliente cliente = new(email, senha);
 
         try {
@@ -39,18 +40,18 @@ public class AuthController : Controller {
                 });
 
             } else {
-                return BadRequest("Usuário ou senha incorretos");
+                return BadRequest(new { message = "Usuário ou senha incorretos" });
             }
         } catch (Exception ex) {
             // Mostra as exceções no console e enviar um BadRequest para o front
             Console.WriteLine(ex.Message);
-            return BadRequest();
+            return BadRequest(new { message = "Um erro ocorreu" });
         }
     }
 
     [HttpPost]
     [Route("funcionario")]
-    public IActionResult LoginFuncioanrio([FromForm][Required] int nif, [Required] string senha) {
+    public IActionResult LoginFuncioanrio([Required] int nif, [Required] string senha) {
         Funcionario funcionario = new(nif, senha);
 
         try {
@@ -69,27 +70,7 @@ public class AuthController : Controller {
             return BadRequest();
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
-            return BadRequest("Usuário ou senha incorretos!");
+            return BadRequest(new { message = "Usuário ou senha incorretos!" });
         }
-    }
-
-    [HttpGet]
-    [Route("logoff")]
-    public IActionResult Logoff() {
-        if (HttpContext.User is ClaimsPrincipal User) {
-            var userTipoClaim = User.FindFirst("tipo");
-            var userIdClaim = User.FindFirst("idUser");
-
-            if (userTipoClaim != null) {
-                var identity = User.Identity as ClaimsIdentity;
-                identity?.RemoveClaim(userTipoClaim);
-            }
-
-            if(userIdClaim != null) {
-                var identity = User.Identity as ClaimsIdentity;
-                identity?.RemoveClaim(userIdClaim);
-            }
-        }
-        return Ok();
     }
 }

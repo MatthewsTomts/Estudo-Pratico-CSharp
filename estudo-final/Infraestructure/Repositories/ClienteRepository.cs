@@ -46,10 +46,6 @@ public class ClienteRepository : IClienteRepository {
     public void EditarPerfil(Cliente cliente) {
         Cliente clienteDb = _connection.Cliente.Find(cliente.Id);
 
-        if (cliente.Senha != null) {
-            clienteDb.Senha = cliente.Senha;
-        }
-
         if (cliente.Email != null) {
             clienteDb.Email = cliente.Email;
         }
@@ -61,12 +57,30 @@ public class ClienteRepository : IClienteRepository {
         _connection.Entry(clienteDb).State = EntityState.Modified;
         _connection.SaveChanges();
     }
-    
+
+    public void EditarSenha(Cliente cliente)
+    {
+        Cliente clienteDb = _connection.Cliente.Find(cliente.Id);
+
+        if (cliente.Senha != null)
+        {
+            clienteDb.Senha = cliente.Senha;
+        }
+
+        _connection.Entry(clienteDb).State = EntityState.Modified;
+        _connection.SaveChanges();
+    }
+
     public string PedidoRecuperarSenha(string email) {
         throw new NotImplementedException();
     }
 
     public void RecuperarSenha(string email, string senha, string codigoValidador) {
         throw new NotImplementedException();
+    }
+
+    public Cliente Dados(int idCliente)
+    {
+        return _connection.Cliente.Find(idCliente);
     }
 }

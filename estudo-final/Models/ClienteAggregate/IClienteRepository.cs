@@ -2,10 +2,12 @@
 
 // Interface que define os metodos relacionados ao cliente
 public interface IClienteRepository {
+    public Cliente Dados(int idCliente);
     public int Logar(Cliente cliente);
     public void Cadastro(Cliente cliente);
     public void ApagarPerfil(int idCliente);
     public void EditarPerfil(Cliente cliente);
+    public void EditarSenha(Cliente cliente);
     public string PedidoRecuperarSenha(string email);
     public void RecuperarSenha(string email, string senha, string codigoValidador);
 }

@@ -19,17 +19,17 @@ public class AgendamentoController : Controller {
     [HttpPost]
     [Authorize(Policy = "RequireVeterinario")]
     [Route("funcionario/cadastro")]
-    public IActionResult CadastrarHorario([FromForm][Required] DateOnly data,[Required] TimeOnly horario) {
+    public IActionResult CadastrarHorario([Required] DateOnly data,[Required] TimeOnly horario) {
         int idFuncionario = TokenService.RecuperarId(HttpContext);
 
         Agendamento agendamento = new(data, horario, idFuncionario);
 
         try {
             _agendamentoRepository.CadastrarHorario(agendamento);
-            return Ok();
+            return Ok(new { message = "Horario Cadastrado!" });
         } catch (Exception ex) {
             Console.WriteLine(ex.ToString());
-            return BadRequest();
+            return BadRequest(new { message = "Um erro ocorreu" });
         }
     }
 
@@ -46,17 +46,17 @@ public class AgendamentoController : Controller {
     [HttpPatch]
     [Authorize(Policy = "RequireVeterinario")]
     [Route("funcionario/finalizar")]
-    public IActionResult FinalizarAgendamento([FromForm] int idAgendamento) {
+    public IActionResult FinalizarAgendamento([Required]int idAgendamento) {
         int idFuncionario = TokenService.RecuperarId(HttpContext);
 
         _agendamentoRepository.FinalizarAgendamento(idAgendamento, idFuncionario);
-        return Ok();
+        return Ok(new { message = "Agendamento Finalizado" });
     }
 
     [HttpPost]
     [Authorize(Policy = "RequireCliente")]
     [Route("cliente/agendar")]
-    public IActionResult AgendarConsulta([FromForm][Required] int idAgendamento, [Required] string nomeAnimal,
+    public IActionResult AgendarConsulta([Required] int idAgendamento, [Required] string nomeAnimal,
            [Required] EspecieAnimal especie) {
         int idCliente = TokenService.RecuperarId(HttpContext);
 
@@ -64,10 +64,10 @@ public class AgendamentoController : Controller {
 
         try {
             _agendamentoRepository.AgendarConsulta(agendamento);
-            return Ok();
+            return Ok(new { message = "Consulta Agendada" });
         } catch (Exception ex) {
             Console.WriteLine(ex.ToString());
-            return BadRequest();
+            return BadRequest(new { message = "Um erro ocorreu" });
         }
     }
 
@@ -83,17 +83,25 @@ public class AgendamentoController : Controller {
 
     [HttpDelete]
     [Route("cancelar")]
-    public IActionResult CancelarConsulta([FromForm] int idAgendamento) {
+    public IActionResult CancelarConsulta([Required]int idAgendamento) {
         int idUser = TokenService.RecuperarId(HttpContext);
 
         _agendamentoRepository.CancelarAgendamento(idAgendamento, idUser);
-        return Ok();
+        return Ok(new { message = "Agendamento cancelado" });
     }
 
     [HttpPatch]
     [Route("pesquisar")]
-    public IActionResult PesquisarAgendamento([FromForm] DateOnly data) {
+    public IActionResult PesquisarAgendamento([Required]DateOnly data) {
         List<Agendamento> agendamentos = _agendamentoRepository.PesquisarAgendamento(data);
+        return Ok(agendamentos);
+    }
+
+    [HttpGet]
+    [Route("listar")]
+    public IActionResult ListarAgendamento()
+    {
+        List<Agendamento> agendamentos = _agendamentoRepository.ListarAgendamento();
         return Ok(agendamentos);
     }
 }

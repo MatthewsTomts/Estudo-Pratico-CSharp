@@ -29,11 +29,16 @@ public class Cliente
         Senha = senha;
     }
 
-    public Cliente(int idCliente, string email, string senha, string nome)
+    public Cliente(int idCliente, string email, string nome)
     {
         Id = idCliente;
         Email = email;
-        Senha = senha;
         Nome = nome;
+    }
+
+    public Cliente(int idCliente, string senha)
+    {
+        Id = idCliente;
+        Senha = senha;
     }
 }

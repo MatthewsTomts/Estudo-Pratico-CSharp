@@ -4,5 +4,6 @@
     <ActiveDebugProfile>https</ActiveDebugProfile>
     <Controller_SelectedScaffolderID>MvcControllerEmptyScaffolder</Controller_SelectedScaffolderID>
     <Controller_SelectedScaffolderCategoryPath>root/Common/MVC/Controller</Controller_SelectedScaffolderCategoryPath>
+    <NameOfLastUsedPublishProfile>D:\ClinicaVeterinaria\estudo-final\Properties\PublishProfiles\pet-space-api-20231127140924.pubxml</NameOfLastUsedPublishProfile>
   </PropertyGroup>
 </Project>

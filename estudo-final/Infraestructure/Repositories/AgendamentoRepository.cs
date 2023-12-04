@@ -2,6 +2,7 @@
 using estudo_final.Models.FuncionarioAggregate;
 using Microsoft.EntityFrameworkCore;
 using static estudo_final.Models.AgendamentoAggregate.Agendamento;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace estudo_final.Infraestructure.Repositories;
 
@@ -49,6 +50,11 @@ public class AgendamentoRepository : IAgendamentoRepository {
             _connection.Entry(agendamentoDb).State = EntityState.Modified;
             _connection.SaveChanges();
         }
+    }
+
+    public List<Agendamento> ListarAgendamento()
+    {
+        return _connection.Agendamento.ToList();
     }
 
     public List<Agendamento> ListarAgendamentos(int nif) {

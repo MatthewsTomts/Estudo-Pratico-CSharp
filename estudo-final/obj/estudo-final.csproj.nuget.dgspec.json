@@ -10,11 +10,11 @@
         "projectUniqueName": "D:\\ClinicaVeterinaria\\estudo-final\\estudo-final.csproj",
         "projectName": "estudo-final",
         "projectPath": "D:\\ClinicaVeterinaria\\estudo-final\\estudo-final.csproj",
-        "packagesPath": "C:\\Users\\viole\\.nuget\\packages\\",
+        "packagesPath": "D:\\Users\\ViolettVohor\\.nuget\\packages\\",
         "outputPath": "D:\\ClinicaVeterinaria\\estudo-final\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\viole\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "D:\\Users\\ViolettVohor\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
