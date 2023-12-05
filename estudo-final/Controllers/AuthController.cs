@@ -22,7 +22,6 @@ public class AuthController : Controller {
     [HttpPost]
     [Route("cliente")]
     public IActionResult LoginCliente([Required] string email, [Required] string senha) {
-        Console.WriteLine("tesete");
         Cliente cliente = new(email, senha);
 
         try {
@@ -44,7 +43,7 @@ public class AuthController : Controller {
             }
         } catch (Exception ex) {
             // Mostra as exceções no console e enviar um BadRequest para o front
-            Console.WriteLine(ex.Message);
+            Console.WriteLine(ex.ToString());
             return BadRequest(new { message = "Um erro ocorreu" });
         }
     }

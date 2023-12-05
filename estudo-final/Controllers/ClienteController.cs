@@ -102,11 +102,10 @@ public class ClienteController : Controller {
     }
 
     [HttpPatch]
-    [Authorize(Policy = "RequireCliente")]
     [Route("Senha")]
-    public IActionResult EditarSenha(string senha)
+    public IActionResult EditarSenha(string senha, int idCliente)
     {
-        int idCliente = TokenService.RecuperarId(HttpContext);
+        senha = EncryptService.Encriptar(senha);
         Cliente cliente = new(idCliente, senha);
 
         if (idCliente != -1)
